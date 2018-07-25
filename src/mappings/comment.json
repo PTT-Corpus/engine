@@ -1,0 +1,54 @@
+{
+	"settings": {
+		"number_of_shards": 3,
+		"number_of_replicas": 2,
+		"index": {
+			"analysis": {
+				"char_filter": {
+					"remove_pos": {
+						"type": "pattern_replace",
+						"pattern": ":[a-zA-Z]+",
+						"replacement": ""
+					}
+				},
+				"analyzer": {
+					"aji_analyzer": {
+						"tokenizer": "whitespace",
+						"char_filter": [
+							"remove_pos"
+						]
+					}
+				}
+			}
+		}
+	},
+	"mappings": {
+		"post": {
+			"properties": {
+				"board": {
+					"type": "text"
+				},
+				"author": {
+					"type": "text"
+				},
+				"published": {
+					"type": "date",
+					"format": "strict_date_optional_time||epoch_millis"
+				},
+				"title": {
+					"analyzer": "aji_analyzer",
+					"type": "text",
+					"term_vector": "with_positions_offsets"
+				},
+				"content": {
+					"analyzer": "aji_analyzer",
+					"type": "text",
+					"term_vector": "with_positions_offsets"
+				},
+				"ip": {
+					"type": "text"
+				}
+			}
+		}
+	}
+}
