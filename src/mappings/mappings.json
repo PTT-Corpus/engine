@@ -23,8 +23,11 @@
 		}
 	},
 	"mappings": {
-		"post": {
+		"doc": {
 			"properties": {
+        "post_type": {
+          "type": "integer"
+        },
 				"board": {
 					"type": "text"
 				},
