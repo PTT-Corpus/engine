@@ -210,6 +210,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 
-# End of https://www.gitignore.io/api/python
-
 # End of https://www.gitignore.io/api/vim,osx,linux,windows
+
+.envrc
+
