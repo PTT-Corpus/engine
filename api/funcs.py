@@ -14,7 +14,7 @@ def query(word: str,
           page: int,
           size: int,
           post_type: int,
-          board: str,
+          boards: list,
           sort: str,
           order: str) -> dict:
     """Query word."""
@@ -24,8 +24,13 @@ def query(word: str,
         must=[
             Q('match', content=word),
             Q('match', post_type=post_type),
-            Q('match', board=board),
-        ]
+        ],
+        should=[
+            Q('match', board=board)
+            for board
+            in boards
+        ],
+        minimum_should_match=1,
     )
     s = s.sort({sort: {'order': order}})
     total = s.count()
