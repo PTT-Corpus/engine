@@ -1,0 +1,5 @@
+falcon==1.4.1
+gunicorn==19.9.0
+elasticsearch==6.3.1
+elasticsearch-dsl==6.2.1
+jseg==0.0.4
