@@ -4,27 +4,20 @@
 		"number_of_replicas": 2,
 		"index": {
 			"analysis": {
-				"char_filter": {
-					"remove_pos": {
-						"type": "pattern_replace",
-						"pattern": ":[a-zA-Z]+",
-						"replacement": ""
-					}
-				},
 				"analyzer": {
 					"aji_analyzer": {
-						"tokenizer": "whitespace",
-						"char_filter": [
-							"remove_pos"
-						]
+						"tokenizer": "whitespace"
 					}
 				}
 			}
 		}
 	},
 	"mappings": {
-		"post": {
+		"doc": {
 			"properties": {
+        "post_type": {
+          "type": "integer"
+        },
 				"board": {
 					"type": "text"
 				},
