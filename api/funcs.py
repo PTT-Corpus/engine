@@ -14,7 +14,9 @@ def query(word: str,
           page: int,
           size: int,
           post_type: int,
-          board: str) -> dict:
+          board: str,
+          sort: str,
+          order: str) -> dict:
     """Query word."""
     s = Search(using=client, index='ptt')
     s.query = Q(
@@ -25,6 +27,7 @@ def query(word: str,
             Q('match', board=board),
         ]
     )
+    s = s.sort({sort: {'order': order}})
     total = s.count()
     start = page * size
     end = start + size
