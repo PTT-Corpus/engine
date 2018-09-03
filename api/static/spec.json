@@ -1,0 +1,132 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "PTT Engine API playground.",
+    "version": "1.0.0",
+    "title": "PTT Engine API",
+    "contact": {
+      "email": "amigcamel@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "140.112.147.121:9000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "query",
+      "description": "Concordance",
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/query": {
+      "get": {
+        "tags": [
+          "query",
+        ],
+        "summary": "Generate Concordance",
+        "description": "Generate Concordance with word or pattern in question",
+        "operationId": "query",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "word",
+            "in": "query",
+            "description": "word or pattern in question",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "nth page",
+            "required": false,
+            "default": 0,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "number of items to be shown in a page",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "post_type",
+            "in": "query",
+            "description": "post (0) or commrnt (1)",
+            "required": false,
+            "default": 0,
+            "type": "integer"
+          },
+          {
+            "name": "boards",
+            "in": "query",
+            "description": "comma-separated list of boards",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+              },
+              "minItems": 1
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort field",
+            "required": false,
+            "default": "published",
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "desc or asc",
+            "required": false,
+            "default": "desc",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "start date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "end date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        },
+
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Github",
+    "url": "http://github.com/PTT-Corpus/engine"
+  }
+}
