@@ -39,7 +39,7 @@ api.add_static_route('/static', STATIC_PATH)
 api.add_route('/query', Query())
 
 SWAGGERUI_URL = '/api'
-SCHEMA_URL = '/static/spec.json'
+SCHEMA_URL = 'http://140.112.147.121:9000/static/spec.json'
 
 page_title = 'PTT Engine API'
 favicon_url = (
