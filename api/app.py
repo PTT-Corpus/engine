@@ -38,8 +38,8 @@ api = falcon.API()
 api.add_static_route('/static', STATIC_PATH)
 api.add_route('/query', Query())
 
-SWAGGERUI_URL = '/swagger'
-SCHEMA_URL = '/static/swagger.json'
+SWAGGERUI_URL = '/api'
+SCHEMA_URL = '/static/spec.json'
 
 page_title = 'PTT Engine API'
 favicon_url = (
