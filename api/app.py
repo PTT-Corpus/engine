@@ -1,7 +1,15 @@
 """PTT Engine API."""
 import falcon
+from falcon_swagger_ui import register_swaggerui_app
 
 from funcs import query
+from settings import (
+    STATIC_PATH,
+    SWAGGERUI_URL,
+    SCHEMA_URL,
+    PAGE_TITLE,
+    FAVICON_URL,
+)
 
 
 class Query:
@@ -31,4 +39,15 @@ class Query:
 
 
 api = falcon.API()
+api.add_static_route('/static', STATIC_PATH)
 api.add_route('/query', Query())
+
+
+register_swaggerui_app(
+    api,
+    SWAGGERUI_URL,
+    SCHEMA_URL,
+    page_title=PAGE_TITLE,
+    favicon_url=FAVICON_URL,
+    config={'supportedSubmitMethods': ['get']}
+)
