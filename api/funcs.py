@@ -1,4 +1,6 @@
 """Core functions."""
+from datetime import datetime
+
 from elasticsearch_dsl import (
     Search,
     Q,
@@ -14,7 +16,11 @@ def query(word: str,
           page: int,
           size: int,
           post_type: int,
-          board: str) -> dict:
+          boards: list,
+          sort: str,
+          order: str,
+          start: datetime=None,
+          end: datetime=None) -> dict:
     """Query word."""
     s = Search(using=client, index='ptt')
     s.query = Q(
@@ -22,18 +28,30 @@ def query(word: str,
         must=[
             Q('match', content=word),
             Q('match', post_type=post_type),
-            Q('match', board=board),
-        ]
+        ],
+        should=[
+            Q('match', board=board)
+            for board
+            in boards
+        ],
+        minimum_should_match=1,
     )
+
+    # sort and order
+    s = s.sort({sort: {'order': order}})
+
+    # filter date range
+    s = s.filter('range', published={'gte': start, 'lte': end})
+
     total = s.count()
-    start = page * size
-    end = start + size
+    left_bound = page * size
+    right_bound = left_bound + size
     output = {
         'total': total,
         'data': [
             i.to_dict()
             for i
-            in s[start:end]
+            in s[left_bound:right_bound]
             if total
         ]
     }
