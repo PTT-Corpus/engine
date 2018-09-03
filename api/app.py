@@ -5,6 +5,10 @@ from falcon_swagger_ui import register_swaggerui_app
 from funcs import query
 from settings import (
     STATIC_PATH,
+    SWAGGERUI_URL,
+    SCHEMA_URL,
+    PAGE_TITLE,
+    FAVICON_URL,
 )
 
 
@@ -38,18 +42,12 @@ api = falcon.API()
 api.add_static_route('/static', STATIC_PATH)
 api.add_route('/query', Query())
 
-SWAGGERUI_URL = '/api'
-SCHEMA_URL = 'http://140.112.147.121:9000/static/spec.json'
-
-page_title = 'PTT Engine API'
-favicon_url = (
-    'http://lopen.linguistics.ntu.edu.tw/static_pttcorp/images/PTTCorp.ico')
 
 register_swaggerui_app(
     api,
     SWAGGERUI_URL,
     SCHEMA_URL,
-    page_title=page_title,
-    favicon_url=favicon_url,
+    page_title=PAGE_TITLE,
+    favicon_url=FAVICON_URL,
     config={'supportedSubmitMethods': ['get']}
 )

@@ -12,4 +12,10 @@ def get_client():
     )
 
 
+# falcon-swagger-ui
 STATIC_PATH = join(dirname(abspath(__file__)), 'static')
+SWAGGERUI_URL = '/api'
+SCHEMA_URL = 'http://140.112.147.121:9000/static/spec.json'
+PAGE_TITLE = 'PTT Engine API'
+FAVICON_URL = (
+    'http://lopen.linguistics.ntu.edu.tw/static_pttcorp/images/PTTCorp.ico')
