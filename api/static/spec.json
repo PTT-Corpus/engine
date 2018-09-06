@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "PTT Engine API playground.",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "title": "PTT Engine API",
     "contact": {
       "email": "amigcamel@gmail.com"
@@ -65,14 +65,16 @@
             "description": "post (0) or commrnt (1)",
             "required": false,
             "default": 0,
-            "type": "integer"
+            "type": "integer",
+            "enum": [0, 1]
           },
           {
             "name": "boards",
             "in": "query",
             "description": "comma-separated list of boards",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "type": "string",
+            "default": "Gossiping,movie,joke"
           },
           {
             "name": "sort",
@@ -80,7 +82,8 @@
             "description": "sort field",
             "required": false,
             "default": "published",
-            "type": "string"
+            "type": "string",
+            "enum": ["published", "upvote", "downvote", "novote"]
           },
           {
             "name": "order",
@@ -88,7 +91,8 @@
             "description": "desc or asc",
             "required": false,
             "default": "desc",
-            "type": "string"
+            "type": "string",
+            "enum": ["desc", "asc"]
           },
           {
             "name": "start",
@@ -105,6 +109,14 @@
             "required": false,
             "type": "string",
             "format": "date"
+          },
+          {
+            "name": "pos",
+            "in": "query",
+            "description": "show/hide Part of Speech",
+            "required": false,
+            "type": "boolean",
+            "enum": [false, true]
           }
         ],
         "responses": {
