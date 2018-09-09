@@ -27,6 +27,7 @@ class Query:
         start = req.get_param_as_date('start') or None
         end = req.get_param_as_date('end') or None
         pos = req.get_param_as_bool('pos') or False
+        window_size = req.get_param_as_int('window_size') or 10
         output = query(word=word,
                        page=page,
                        size=size,
@@ -36,7 +37,8 @@ class Query:
                        order=order,
                        start=start,
                        end=end,
-                       pos=pos)
+                       pos=pos,
+                       window_size=window_size)
         resp.media = output
 
 
