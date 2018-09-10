@@ -27,12 +27,16 @@ def query(word: str,
           window_size: int=10) -> dict:
     """Query word."""
     s = Search(using=client, index='ptt')
+    must = [
+        Q('match', content=word),
+    ]
+    if post_type:
+        must.append(
+            Q('match', post_type=post_type),
+        )
     s.query = Q(
         'bool',
-        must=[
-            Q('match', content=word),
-            Q('match', post_type=post_type),
-        ],
+        must=must,
         should=[
             Q('match', board=board)
             for board
