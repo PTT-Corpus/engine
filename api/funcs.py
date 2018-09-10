@@ -62,26 +62,41 @@ def query(word: str,
         for i in s[left_bound:right_bound]:
             d = i.to_dict()
             if pos:
-                res = [
-                    f'{word}|{pos}'
-                    for (word, pos)
-                    in j.seg(d['content'], pos=True)
-                ]
-                d['content'] = ' '.join(res)
-            concordance = i.meta.highlight.content[0].replace('\n ', '')
-            concordance = concordance.split(' ')
-            for idx, word in enumerate(concordance):
-                if word.startswith('<em>'):
-                    left = idx - window_size
-                    if left < 0:
-                        left = 0
-                    right = idx + window_size
-                    d['concordance'] = (
-                        ' '.join(concordance[left:idx]),
-                        concordance[idx],
-                        ' '.join(concordance[idx+1:right+1]),
-                    )
-                    break
+                segments = j.seg(d['content'], pos=True)
+                for idx, (char, pos) in enumerate(segments):
+                    segments[idx] = f'{char}|{pos}'
+                    if char == word:
+                        segments[idx] = f'<em>{segments[idx]}</em>'
+                        left = idx - window_size
+                        if left < 0:
+                            left = 0
+                        right = idx + window_size + 1
+                        break
+                d['concordance'] = (
+                    ' '.join(segments[left:idx]),
+                    segments[idx],
+                    ' '.join(
+                        f'{char}|{pos}'
+                        for (char, pos)
+                        in segments[idx+1:right]
+                    ),
+                )
+
+            else:
+                concordance = i.meta.highlight.content[0].replace('\n ', '')
+                concordance = concordance.split(' ')
+                for idx, word in enumerate(concordance):
+                    if word.startswith('<em>'):
+                        left = idx - window_size
+                        if left < 0:
+                            left = 0
+                        right = idx + window_size + 1
+                        d['concordance'] = (
+                            ' '.join(concordance[left:idx]),
+                            concordance[idx],
+                            ' '.join(concordance[idx+1:right]),
+                        )
+                        break
             data.append(d)
     output = {
         'total': total,
