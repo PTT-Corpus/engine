@@ -30,10 +30,16 @@ def query(word: str,
     must = [
         Q('match', content=word)
     ]
-    if post_type == 0 or post_type == 1:
+    if post_type == 0:
         must.append(
-            Q('match', post_type=post_type),
+            Q('match', post_type=0),
         )
+    elif post_type == 1:
+        must.append(
+            Q('match', post_type=1),
+        )
+    else:
+        pass
 
     s.query = Q(
         'bool',
