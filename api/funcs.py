@@ -29,11 +29,13 @@ def query(word: str,
     s = Search(using=client, index='ptt')
     must = [
         Q('match', content=word),
+        Q('match', post_type=0)
     ]
-    if str(post_type) == "0" or str(post_type) == "1":
-        must.append(
-            Q('match', post_type=post_type),
-        )
+    # if post_type == 0 or post_type == 1:
+    #     must.append(
+    #         Q('match', post_type=post_type),
+    #     )
+
     s.query = Q(
         'bool',
         must=must,
