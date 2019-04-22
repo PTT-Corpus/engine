@@ -8,16 +8,17 @@ from elasticsearch_dsl import (
 from jseg import Jieba
 
 from settings import get_client
-
+import logging
 
 client = get_client()
 j = Jieba()
-
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def query(word: str,
           page: int,
           size: int,
-          post_type: int,
+          post_type: str,
           boards: list,
           sort: str,
           order: str,
@@ -30,16 +31,11 @@ def query(word: str,
     must = [
         Q('match', content=word)
     ]
-    if post_type == 0:
+
+    if isinstance(post_type, str):
         must.append(
-            Q('match', post_type=0),
+            Q('match', post_type=int(post_type)),
         )
-    elif post_type == 1:
-        must.append(
-            Q('match', post_type=1),
-        )
-    else:
-        pass
 
     s.query = Q(
         'bool',
