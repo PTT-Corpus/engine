@@ -28,9 +28,14 @@ def query(word: str,
           window_size: int=10) -> dict:
     """Query word."""
     s = Search(using=client, index='ptt')
-    must = [
-        Q('match', content=word)
-    ]
+    if ' ' in word:
+        must = [
+        Q('match_phrase', content=word)
+        ]
+    else:
+        must = [
+            Q('match', content=word)
+        ]
 
     if isinstance(post_type, str):
         must.append(
