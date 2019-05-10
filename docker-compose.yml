@@ -17,7 +17,12 @@ services:
       - 19200:9200
     networks:
       - esnet
-
+  ptt_engine:
+    image: ptt_engine
+    ports:
+      - 9000:80
+    networks:
+      - esnet
   cerebro:
     image: yannart/cerebro:latest
     volumes:
