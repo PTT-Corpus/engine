@@ -28,9 +28,10 @@ def query(word: str,
           window_size: int=10) -> dict:
     """Query word."""
     s = Search(using=client, index='ptt')
-    if ' ' in word:
+    if '&&' in word:
+        q = ' '.join(word.split('&&'))
         must = [
-        Q('match_phrase', content=word)
+        Q('match_phrase', content=q)
         ]
     else:
         must = [
