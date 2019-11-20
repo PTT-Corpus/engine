@@ -44,7 +44,8 @@ class Query:
 
 api = falcon.API()
 api.add_static_route('/static', STATIC_PATH)
-api.add_route('/query', Query())
+q = Query()
+api.add_route('/query', q)
 
 
 register_swaggerui_app(
