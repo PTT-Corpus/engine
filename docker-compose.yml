@@ -21,6 +21,8 @@ services:
     image: ptt_engine
     ports:
       - 9000:80
+    env_file:
+      - ptt_engine.env
     networks:
       - esnet
     depends_on:
